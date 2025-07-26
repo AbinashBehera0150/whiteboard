@@ -4,25 +4,35 @@ import { COLORS, TOOLBOX_ACTIONS, TOOL_ITEMS } from "../constants";
 
 function toolboxReducer(state, action) {
   switch (action.type) {
-    case TOOLBOX_ACTIONS.CHANGE_STROKE: {
-      const newState = { ...state };
-      newState[action.payload.tool].stroke = action.payload.stroke;
-      return newState;
-    }
-    case TOOLBOX_ACTIONS.CHANGE_FILL: {
-      const newState = { ...state };
-      newState[action.payload.tool].fill = action.payload.fill;
-      return newState;
-    }
-    case TOOLBOX_ACTIONS.CHANGE_SIZE: {
-      const newState = { ...state };
-      newState[action.payload.tool].size = action.payload.size;
-      return newState;
-    }
+    case TOOLBOX_ACTIONS.CHANGE_STROKE:
+      return {
+        ...state,
+        [action.payload.tool]: {
+          ...state[action.payload.tool],
+          stroke: action.payload.stroke,
+        },
+      };
+    case TOOLBOX_ACTIONS.CHANGE_FILL:
+      return {
+        ...state,
+        [action.payload.tool]: {
+          ...state[action.payload.tool],
+          fill: action.payload.fill,
+        },
+      };
+    case TOOLBOX_ACTIONS.CHANGE_SIZE:
+      return {
+        ...state,
+        [action.payload.tool]: {
+          ...state[action.payload.tool],
+          size: action.payload.size,
+        },
+      };
     default:
       return state;
   }
 }
+
 
 const initialToolboxState = {
   [TOOL_ITEMS.BRUSH]: {
@@ -61,30 +71,21 @@ const ToolboxProvider = ({ children }) => {
   const changeStrokeHandler = (tool, stroke) => {
     dispatchToolboxAction({
       type: TOOLBOX_ACTIONS.CHANGE_STROKE,
-      payload: {
-        tool,
-        stroke,
-      },
+      payload: { tool, stroke },
     });
   };
 
   const changeFillHandler = (tool, fill) => {
     dispatchToolboxAction({
       type: TOOLBOX_ACTIONS.CHANGE_FILL,
-      payload: {
-        tool,
-        fill,
-      },
+      payload: { tool, fill },
     });
   };
 
   const changeSizeHandler = (tool, size) => {
     dispatchToolboxAction({
       type: TOOLBOX_ACTIONS.CHANGE_SIZE,
-      payload: {
-        tool,
-        size,
-      },
+      payload: { tool, size },
     });
   };
 
